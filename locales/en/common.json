@@ -1,0 +1,11 @@
+{
+	"title": "Hue Orchestrator",
+	"headers": {
+		"overview": "Overview"
+	},
+	"footer": {
+		"poweredby": "Powered by",
+		"home": "Home",
+		"top": "Return to top"
+	}
+}

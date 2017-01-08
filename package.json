@@ -1,0 +1,87 @@
+{
+  "name": "hue-orchestrator",
+  "version": "1.0.0",
+  "description": "Control your Philips Hue lights with advanced routines and triggers",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Requarks/hue-orchestrator.git"
+  },
+  "keywords": [
+    "hue",
+    "philips",
+    "hue",
+    "orchestrator",
+    "light",
+    "lights",
+    "routine",
+    "trigger",
+    "automation",
+    "home"
+  ],
+  "author": "Nicolas Giard",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Requarks/hue-orchestrator/issues"
+  },
+  "homepage": "https://github.com/Requarks/hue-orchestrator#readme",
+  "engines": {
+    "node": ">=4.6"
+  },
+  "dependencies": {
+    "auto-load": "^2.1.0",
+    "bcryptjs-then": "^1.0.1",
+    "bluebird": "^3.4.7",
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^1.3.2",
+    "cookie-parser": "^1.4.3",
+    "cron": "^1.2.1",
+    "express": "^4.14.0",
+    "express-brute": "^1.0.1",
+    "express-brute-mongoose": "0.0.7",
+    "express-session": "^1.14.2",
+    "fs-extra": "^1.0.0",
+    "huejay": "^1.5.0",
+    "i18next": "^4.1.4",
+    "i18next-express-middleware": "^1.0.2",
+    "i18next-node-fs-backend": "^0.1.3",
+    "js-yaml": "^3.7.0",
+    "lodash": "^4.17.4",
+    "moment": "^2.17.1",
+    "moment-timezone": "^0.5.11",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "pug": "^2.0.0-beta6",
+    "requarks-core": "github:requarks/core",
+    "request": "^2.79.0",
+    "serve-favicon": "^2.3.2",
+    "validator": "^6.2.1"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.18.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-clean-css": "^2.3.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-gzip": "^1.4.0",
+    "gulp-include": "^2.3.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^3.0.0",
+    "gulp-tar": "^1.9.0",
+    "gulp-uglify": "^2.0.0",
+    "gulp-watch": "^4.3.11",
+    "gulp-zip": "^3.2.0",
+    "jquery": "^3.1.1",
+    "merge-stream": "^1.0.1",
+    "nodemon": "^1.11.0",
+    "run-sequence": "^1.2.2",
+    "snyk": "^1.23.2",
+    "vue": "^2.1.8"
+  }
+}

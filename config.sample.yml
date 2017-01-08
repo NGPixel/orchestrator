@@ -1,0 +1,53 @@
+#######################################################################
+# Hue Orchestrator - CONFIGURATION                                    #
+#######################################################################
+# Full explanation + examples in the documentation:
+# https://hue.requarks.io/install
+
+# ---------------------------------------------------------------------
+# Title of this site
+# ---------------------------------------------------------------------
+
+title: Hue Orchestrator
+
+# ---------------------------------------------------------------------
+# Full public path to the site, without the trailing slash
+# ---------------------------------------------------------------------
+
+host: http://localhost
+
+# ---------------------------------------------------------------------
+# Port the main server should listen to (80 by default)
+# ---------------------------------------------------------------------
+# To use process.env.PORT, comment the line below:
+
+port: 80
+
+# ---------------------------------------------------------------------
+# Site Language
+# ---------------------------------------------------------------------
+# Possible values: en, fr
+
+lang: en
+
+# ---------------------------------------------------------------------
+# Secret key to use when encrypting sessions
+# ---------------------------------------------------------------------
+# Use a long and unique random string (256-bit keys are perfect!)
+
+sessionSecret: 1234567890abcdefghijklmnopqrstuvxyz
+
+# ---------------------------------------------------------------------
+# Administrator email
+# ---------------------------------------------------------------------
+# An admin account will be created using the email specified here.
+# The password is set to "admin123" by default. Change it immediately
+# upon login!!!
+
+admin: admin@company.com
+
+# ---------------------------------------------------------------------
+# Database Connection String
+# ---------------------------------------------------------------------
+
+db: mongodb://localhost:27017/hue

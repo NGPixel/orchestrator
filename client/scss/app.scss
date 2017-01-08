@@ -1,0 +1,19 @@
+
+$primary: 'green';
+
+@import 'core-client/scss/core';
+@import 'core-client/scss/components/alert';
+@import 'core-client/scss/components/button';
+@import 'core-client/scss/components/footer';
+@import 'core-client/scss/components/form';
+@import 'core-client/scss/components/grid';
+@import 'core-client/scss/components/hero';
+@import 'core-client/scss/components/modal';
+@import 'core-client/scss/components/nav';
+@import 'core-client/scss/components/panel';
+@import 'core-client/scss/components/search';
+@import 'core-client/scss/components/sidebar';
+@import 'core-client/scss/components/table';
+@import 'core-client/scss/components/typography';
+
+@import './layout/_header';
