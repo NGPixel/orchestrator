@@ -62,17 +62,17 @@ global.app = express();
 app.use(compression());
 
 // ----------------------------------------
-// Security
-// ----------------------------------------
-
-app.use(mw.security);
-
-// ----------------------------------------
 // Public Assets
 // ----------------------------------------
 
 //app.use(favicon(path.join(ROOTPATH, 'assets', 'favicon.ico')));
 app.use(express.static(path.join(ROOTPATH, 'assets')));
+
+// ----------------------------------------
+// Security
+// ----------------------------------------
+
+app.use(mw.security);
 
 // ----------------------------------------
 // Passport Authentication
@@ -143,8 +143,9 @@ app.use(mw.flash);
 
 app.use('/', ctrl.auth);
 
-app.use('/', mw.auth, ctrl.home);
+app.use('/', mw.auth, ctrl.dashboard);
 app.use('/lights', mw.auth, ctrl.lights);
+app.use('/admin/bridges', mw.auth, ctrl.admin.bridges);
 
 // ----------------------------------------
 // Error handling

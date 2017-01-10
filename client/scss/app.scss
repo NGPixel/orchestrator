@@ -16,4 +16,6 @@ $primary: 'green';
 @import 'core-client/scss/components/table';
 @import 'core-client/scss/components/typography';
 
+@import './components/device';
+
 @import './layout/_header';

@@ -28,7 +28,7 @@ html
 	body
 		#bg
 			each bg in _.sampleSize([1, 2, 3],3)
-				div(style="background-image:url(/images/bg_" + bg + ".jpg);")
+				div(style="background-image:url(/images/auth/bg_" + bg + ".jpg);")
 		#root
 			h1= appconfig.title
 			h2 Login required
@@ -43,6 +43,6 @@ html
 				button(type='submit') Log In
 		#copyright
 			= t('footer.poweredby') + ' '
-			a.icon(href='https://github.com/Requarks/hue-orchestrator')
+			a.icon(href='https://github.com/Requarks/orchestrator')
 				i.icon-github
-			a(href='https://github.com/Requarks/hue-orchestrator') Hue Orchestrator
+			a(href='https://github.com/Requarks/orchestrator') Orchestrator
