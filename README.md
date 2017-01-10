@@ -1,4 +1,4 @@
-# Hue Orchestrator
+# Orchestrator
 
 [![Release](https://img.shields.io/github/release/Requarks/hue-orchestrator.svg?maxAge=86400)](https://github.com/Requarks/hue-ochestrator/releases)
 [![License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/requarks/wiki/blob/master/LICENSE)
@@ -7,5 +7,5 @@
 [![Dependency Status](https://gemnasium.com/badges/github.com/Requarks/hue-orchestrator.svg)](https://gemnasium.com/github.com/Requarks/hue-orchestrator)
 [![Known Vulnerabilities](https://snyk.io/test/github/requarks/hue-orchestrator/badge.svg)](https://snyk.io/test/github/requarks/hue-orchestrator)
 
-##### Control your Philips Hue lights with advanced routines and triggers
+##### Control your home automation with advanced routines and triggers (e.g Philips Hue lights)
 *Under active development*

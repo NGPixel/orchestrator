@@ -1,14 +1,14 @@
 #######################################################################
-# Hue Orchestrator - CONFIGURATION                                    #
+# Orchestrator - CONFIGURATION                                        #
 #######################################################################
 # Full explanation + examples in the documentation:
-# https://hue.requarks.io/install
+# https://orchestrator.requarks.io/
 
 # ---------------------------------------------------------------------
 # Title of this site
 # ---------------------------------------------------------------------
 
-title: Hue Orchestrator
+title: Orchestrator
 
 # ---------------------------------------------------------------------
 # Full public path to the site, without the trailing slash
@@ -50,4 +50,4 @@ admin: admin@company.com
 # Database Connection String
 # ---------------------------------------------------------------------
 
-db: mongodb://localhost:27017/hue
+db: mongodb://localhost:27017/orchestrator

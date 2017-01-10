@@ -1,20 +1,19 @@
 {
-  "name": "hue-orchestrator",
+  "name": "orchestrator",
   "version": "1.0.0",
-  "description": "Control your Philips Hue lights with advanced routines and triggers",
+  "description": "Control your home automation with advanced routines and triggers (e.g. Philips Hue lights)",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Requarks/hue-orchestrator.git"
+    "url": "git+https://github.com/Requarks/orchestrator.git"
   },
   "keywords": [
+    "orchestrator",
     "hue",
     "philips",
-    "hue",
-    "orchestrator",
     "light",
     "lights",
     "routine",
@@ -25,9 +24,9 @@
   "author": "Nicolas Giard",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/Requarks/hue-orchestrator/issues"
+    "url": "https://github.com/Requarks/orchestrator/issues"
   },
-  "homepage": "https://github.com/Requarks/hue-orchestrator#readme",
+  "homepage": "https://github.com/Requarks/orchestrator#readme",
   "engines": {
     "node": ">=4.6"
   },

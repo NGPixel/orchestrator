@@ -24,8 +24,10 @@ winston.info('Hue Orchestrator Server is initializing...');
 // Load global modules
 // ----------------------------------------
 
-var appconfig = require(CORE_PATH + 'core-libs/config')('./config.yml');
-global.db = require(CORE_PATH + 'core-libs/mongodb').init(appconfig);
+let appconf = require(CORE_PATH + 'core-libs/config')();
+global.appconfig = appconf.config;
+global.appdata = appconf.data;
+global.db = require(CORE_PATH + 'core-libs/mongodb').init();
 global.lang = require('i18next');
 
 // ----------------------------------------
@@ -76,9 +78,7 @@ app.use(express.static(path.join(ROOTPATH, 'assets')));
 // Passport Authentication
 // ----------------------------------------
 
-var strategy = require(CORE_PATH + 'core-libs/auth')(passport, appconfig);
-global.rights = require(CORE_PATH + 'core-libs/rights');
-rights.init();
+var strategy = require(CORE_PATH + 'core-libs/auth')(passport);
 
 var sessionStore = new sessionMongoStore({
   mongooseConnection: db.connection,
