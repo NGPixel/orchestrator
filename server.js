@@ -1,6 +1,6 @@
 "use strict";
 // ===========================================
-// Hue Orchestrator
+// Orchestrator
 // 1.0.0
 // Licensed under GPLv3
 // ===========================================
@@ -18,7 +18,7 @@ if(IS_DEBUG) {
 // ----------------------------------------
 
 global.winston = require(CORE_PATH + 'core-libs/winston')(IS_DEBUG);
-winston.info('Hue Orchestrator Server is initializing...');
+winston.info('Orchestrator Server is initializing...');
 
 // ----------------------------------------
 // Load global modules
@@ -27,7 +27,7 @@ winston.info('Hue Orchestrator Server is initializing...');
 let appconf = require(CORE_PATH + 'core-libs/config')();
 global.appconfig = appconf.config;
 global.appdata = appconf.data;
-global.db = require(CORE_PATH + 'core-libs/mongodb').init();
+global.db = require('./libs/rethinkdb').init();
 global.lang = require('i18next');
 
 // ----------------------------------------
@@ -49,7 +49,7 @@ const i18next_mw = require('i18next-express-middleware');
 const passport = require('passport');
 const path = require('path');
 const session = require('express-session');
-const sessionMongoStore = require('connect-mongo')(session);
+const sessionRethinkdbStore = require('session-rethinkdb')(session);
 
 var mw = autoload(CORE_PATH + '/core-middlewares');
 var ctrl = autoload(path.join(ROOTPATH, '/controllers'));
@@ -78,17 +78,12 @@ app.use(mw.security);
 // Passport Authentication
 // ----------------------------------------
 
-var strategy = require(CORE_PATH + 'core-libs/auth')(passport);
-
-var sessionStore = new sessionMongoStore({
-  mongooseConnection: db.connection,
-  touchAfter: 15
-});
+var strategy = require('./libs/auth')(passport);
 
 app.use(cookieParser());
 app.use(session({
-  name: 'hueorchestrator.sid',
-  store: sessionStore,
+  name: 'orchestrator.sid',
+  store: new sessionRethinkdbStore(db.r),
   secret: appconfig.sessionSecret,
   resave: false,
   saveUninitialized: false
@@ -145,7 +140,9 @@ app.use('/', ctrl.auth);
 
 app.use('/', mw.auth, ctrl.dashboard);
 app.use('/lights', mw.auth, ctrl.lights);
-app.use('/admin/bridges', mw.auth, ctrl.admin.bridges);
+app.use('/bridges', mw.auth, ctrl.bridges);
+
+app.use('/api/bridges', mw.auth, ctrl.api.bridges);
 
 // ----------------------------------------
 // Error handling

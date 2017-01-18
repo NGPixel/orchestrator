@@ -12,7 +12,15 @@ var _ = require('lodash');
  * Overview
  */
 router.get('/', (req, res, next) => {
-	res.render('admin/bridges');
+
+	db.Bridge.run()
+  .then(bridges => {
+  	res.render('bridges/bridges', { bridges });
+  })
+  .catch(error => {
+    console.log(`An error occurred: ${error.message}`);
+  });
+
 });
 
 module.exports = router;

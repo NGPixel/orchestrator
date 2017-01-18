@@ -1,0 +1,35 @@
+extends ../layout.pug
+
+block rootNavRight
+	i.nav-item#notifload
+	.nav-item
+			a.button.btn-create-prompt
+				i.icon-arrow-sync
+				span Discover
+
+block content
+	#page-type-view
+		.container.is-fluid
+			.columns.is-gapless
+
+				.column.is-narrow.is-hidden-touch.sidebar
+
+					include ../common/sidebar.pug
+
+				.column
+
+					.hero
+						h1.title Lights
+						h2.subtitle Manage your lights
+					.content
+						.device-list
+							each lt in lights
+								.device
+									.device-icon: img.is-small(src="/images/devices/philips/white_and_color_e27_b22.svg")
+									.device-state.is-on
+									.device-title
+										= lt.device.name
+										span #{lt.device.brand} - #{lt.device.model}
+									.device-room= lt.device.room.name
+
+	include ../modals/bridges-discover.pug

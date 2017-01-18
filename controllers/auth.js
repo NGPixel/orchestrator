@@ -1,14 +1,16 @@
+"use strict";
+
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var ExpressBrute = require('express-brute');
-var ExpressBruteMongooseStore = require('express-brute-mongoose');
+var ExpressBruteRethinkdbStore = require('brute-rethinkdb');
 var moment = require('moment');
 
 /**
  * Setup Express-Brute
  */
-var EBstore = new ExpressBruteMongooseStore(db.Bruteforce);
+var EBstore = new ExpressBruteRethinkdbStore(db.r, {table: 'brute'});
 var bruteforce = new ExpressBrute(EBstore, {
 	freeRetries: 5,
 	minWait: 60 * 1000,
@@ -24,6 +26,8 @@ var bruteforce = new ExpressBrute(EBstore, {
 		res.redirect('/login');
 	}
 });
+
+
 
 /**
  * Login form

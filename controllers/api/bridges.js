@@ -5,20 +5,24 @@ var router = express.Router();
 var _ = require('lodash');
 
 // ==========================================
-// Dashboard
+// API - Bridges
 // ==========================================
 
 /**
- * Dashboard
+ * Discover
  */
-router.get('/', (req, res, next) => {
-	db.Light.getJoin().run()
-  .then(lights => {
-  	res.render('lights/lights', { lights });
+router.post('/discover', (req, res, next) => {
+
+	let huejay = require('huejay');
+
+	huejay.discover()
+  .then(bridges => {
+  	return res.json({ bridges }) || true;
   })
   .catch(error => {
-    console.log(`An error occurred: ${error.message}`);
+    res.status(500).json({ msg: error.message });
   });
+
 });
 
 module.exports = router;

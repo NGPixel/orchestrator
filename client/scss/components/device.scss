@@ -1,8 +1,99 @@
-.device {
+.device-list {
+	border:1px solid mc('blue-grey', '100');
+	border-radius: 3px;
+	padding: 1px;
+	background-color: #FFF;
 
-	&.is-small {
-		max-width: 50px;
-		max-height: 50px;
+	> div {
+		background-color: mc('blue-grey', '50');
+		margin-bottom: 1px;
+		display: flex;
+		align-items: center;
+
+		&:first-child {
+
+			.device-icon {
+				border-top-left-radius: 3px;
+			}
+
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+
+			.device-icon {
+				border-bottom-left-radius: 3px;
+			}
+
+		}
+
+		&:nth-child(odd) {
+			background-color: lighten(mc('blue-grey', '50'), 3%);
+		}
+
 	}
 
+}
+
+.device-icon {
+	padding: 8px 10px;
+	background-color: mc('blue-grey', '800');
+	align-self: stretch;
+	display: flex;
+	align-items: center;
+
+	img {
+		filter: invert(100%);
+
+		&.is-small {
+			width: 30px;
+			height: 30px;
+		}
+
+	}
+
+}
+
+.device-state {
+	width: 5px;
+	background-color: mc('blue-grey', '300');
+	align-self: stretch;
+	margin-left: 1px;
+	flex: 0 0 auto;
+
+	&.is-off {
+		background-color: mc('red', '500');
+	}
+
+	&.is-on {
+		background-color: mc('green', '500');
+	}
+
+}
+
+.device-title {
+	padding: 10px 15px;
+	color: mc('blue-grey', '700');
+	font-weight: 500;
+	flex: 1 0 auto;
+
+	span {
+		display: block;
+		font-size: 11px;
+		color: mc('blue-grey', '500');
+	}
+
+}
+
+.device-room {
+	padding: 0 10px;
+	display: flex;
+	align-items: center;
+	height: 25px;
+	color: mc('blue-grey', '700');
+	border:1px dashed mc('blue-grey', '500');
+	border-radius: 5px;
+	font-size: 12px;
+	flex: 0 0 auto;
+	margin: 0 15px;
 }
