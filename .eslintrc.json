@@ -21,7 +21,17 @@
   "globals": {
     "document": false,
     "navigator": false,
-    "window": false
+    "window": false,
+    "app": true,
+    "appconfig": true,
+    "appdata": true,
+    "db": true,
+    "devices": true,
+    "lang": true,
+    "winston": true,
+    "CORE_PATH": true,
+    "ROOTPATH": true,
+    "IS_DEBUG": true
   },
 
   "rules": {
