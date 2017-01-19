@@ -1,8 +1,7 @@
-"use strict";
+'use strict'
 
-var express = require('express');
-var router = express.Router();
-var _ = require('lodash');
+const express = require('express')
+const router = express.Router()
 
 // ==========================================
 // Bridges
@@ -12,15 +11,13 @@ var _ = require('lodash');
  * Overview
  */
 router.get('/', (req, res, next) => {
-
-	db.Bridge.run()
+  db.Bridge.run()
   .then(bridges => {
-  	res.render('bridges/bridges', { bridges });
+    res.render('bridges/bridges', { bridges })
   })
   .catch(error => {
-    console.log(`An error occurred: ${error.message}`);
-  });
+    console.log(`An error occurred: ${error.message}`)
+  })
+})
 
-});
-
-module.exports = router;
+module.exports = router

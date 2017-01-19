@@ -1,8 +1,7 @@
-"use strict";
+'use strict'
 
-var express = require('express');
-var router = express.Router();
-var _ = require('lodash');
+const express = require('express')
+const router = express.Router()
 
 // ==========================================
 // API - Bridges
@@ -12,17 +11,15 @@ var _ = require('lodash');
  * Discover
  */
 router.post('/discover', (req, res, next) => {
+  let huejay = require('huejay')
 
-	let huejay = require('huejay');
-
-	huejay.discover()
+  huejay.discover()
   .then(bridges => {
-  	return res.json({ bridges }) || true;
+    return res.json({ bridges }) || true
   })
   .catch(error => {
-    res.status(500).json({ msg: error.message });
-  });
+    res.status(500).json({ msg: error.message })
+  })
+})
 
-});
-
-module.exports = router;
+module.exports = router

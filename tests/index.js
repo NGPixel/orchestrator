@@ -1,10 +1,10 @@
-"use strict";
+'use strict'
 
-let path = require('path'),
-	 fs = require('fs');
+// const path = require('path')
+// const fs = require('fs')
 
 // ========================================
 // Load global modules
 // ========================================
 
-global._ = require('lodash');
+// global._ = require('lodash');

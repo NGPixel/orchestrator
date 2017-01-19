@@ -1,50 +1,47 @@
-"use strict";
+'use strict'
 
-const thk = require('thinky'),
-			fs   = require("fs"),
-			path = require("path"),
-			_ = require('lodash');
+const thk = require('thinky')
+const fs = require('fs')
+const path = require('path')
+const _ = require('lodash')
 
 /**
- * MongoDB module
+ * RethinkDB module
  *
  * @return     {Object}  MongoDB wrapper instance
  */
 module.exports = {
 
-	/**
-	 * Initialize DB
-	 *
-	 * @return     {Object}  DB instance
-	 */
-	init() {
+  /**
+   * Initialize DB
+   *
+   * @return     {Object}  DB instance
+   */
+  init () {
+    let self = this
+    let dbModelsPath = path.resolve(ROOTPATH, 'models')
 
-		let self = this;
+    // Init Thinky
 
-		let dbModelsPath = path.resolve(ROOTPATH, 'models');
+    self = thk(appconfig.db)
 
-		// Init Thinky
-		
-		self = thk(appconfig.db);
+    // Load DB Models
 
-		// Load DB Models
+    fs
+    .readdirSync(dbModelsPath)
+    .filter(file => {
+      return (file.indexOf('.') !== 0 && _.startsWith(file, '_') === false)
+    })
+    .forEach(file => {
+      let modelName = _.upperFirst(_.camelCase(_.split(file, '.')[0]))
+      self[modelName] = require(path.join(dbModelsPath, file))(self)
+    })
 
-		fs
-		.readdirSync(dbModelsPath)
-		.filter(function(file) {
-			return (file.indexOf(".") !== 0 && _.startsWith(file, '_') === false);
-		})
-		.forEach(function(file) {
-			let modelName = _.upperFirst(_.camelCase(_.split(file,'.')[0]));
-			self[modelName] = require(path.join(dbModelsPath, file))(self);
-		});
+    // Associate models
 
-		// Associate models
+    require(path.join(dbModelsPath, '_relations.js'))(self)
 
-		require(path.join(dbModelsPath, '_relations.js'))(self);
+    return self
+  }
 
-		return self;
-
-	}
-
-};
+}

@@ -4,7 +4,7 @@
   "description": "Control your home automation with advanced routines and triggers (e.g. Philips Hue lights)",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "standard"
   },
   "repository": {
     "type": "git",
@@ -53,6 +53,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.17.1",
     "moment-timezone": "^0.5.11",
+    "node-schedule": "^1.2.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "pug": "^2.0.0-beta6",
@@ -85,6 +86,21 @@
     "nodemon": "^1.11.0",
     "run-sequence": "^1.2.2",
     "snyk": "^1.23.2",
+    "standard": "*",
     "vue": "^2.1.8"
+  },
+  "standard": {
+    "globals": [
+      "app",
+      "appconfig",
+      "appdata",
+      "db",
+      "devices",
+      "lang",
+      "winston",
+      "CORE_PATH",
+      "ROOTPATH",
+      "IS_DEBUG"
+    ]
   }
 }

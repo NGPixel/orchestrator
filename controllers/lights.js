@@ -1,8 +1,7 @@
-"use strict";
+'use strict'
 
-var express = require('express');
-var router = express.Router();
-var _ = require('lodash');
+const express = require('express')
+const router = express.Router()
 
 // ==========================================
 // Dashboard
@@ -12,13 +11,13 @@ var _ = require('lodash');
  * Dashboard
  */
 router.get('/', (req, res, next) => {
-	db.Light.getJoin().run()
+  db.Light.getJoin().run()
   .then(lights => {
-  	res.render('lights/lights', { lights });
+    res.render('lights/lights', { lights })
   })
   .catch(error => {
-    console.log(`An error occurred: ${error.message}`);
-  });
-});
+    console.log(`An error occurred: ${error.message}`)
+  })
+})
 
-module.exports = router;
+module.exports = router

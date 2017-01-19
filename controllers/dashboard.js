@@ -1,8 +1,7 @@
-'use strict';
+'use strict'
 
-var express = require('express');
-var router = express.Router();
-var _ = require('lodash');
+const express = require('express')
+const router = express.Router()
 
 // ==========================================
 // Dashboard
@@ -12,7 +11,7 @@ var _ = require('lodash');
  * Dashboard
  */
 router.get('/', (req, res, next) => {
-	res.render('dashboard/dashboard');
-});
+  res.render('dashboard/dashboard')
+})
 
-module.exports = router;
+module.exports = router
