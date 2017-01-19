@@ -50,4 +50,7 @@ admin: admin@company.com
 # Database Connection String
 # ---------------------------------------------------------------------
 
-db: mongodb://localhost:27017/orchestrator
+db:
+  host: localhost
+  port: 28015
+  db: orchestrator
