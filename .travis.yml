@@ -1,0 +1,40 @@
+language: node_js
+node_js:
+- '6'
+- '4'
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
+env:
+  global:
+  - CXX=g++-4.8
+  - secure: mhdUhXOrd7XqY2ZHTHh9kGFA1j4ORtWyldhQe1ZF3Pp9h2G8f7CaWFOpolzt7i1FkbAnSdKGm+JtGXqn2tLyESC9oigISJ68e0wmkQQlWZ2/hwubEg9vnCEhfrbfUUf2s4XOs1OXc+J3nJ5Oi1HBf6yU7CQVeFrh98EgYGhnx9Hh2cxafhPs8L8D4CN3FsLbGU0uH0yYFc2nmE01Otip1BsuuvBGNw+mDh0o/qnPngpvbsAjViS13SuP7U7gDF8snmFYh2y+gspzHMajhNo7IXuoyxOJhGVYcqwPmUYIkpnIi1AkpjeUM0fm+Au147hN6MHDGfKLjE96o8Kt29WJ2fm2YFZc0R+Lw6UqauJjoye+8s0x0JgvIoAlzIb7sYBuJLumLeSEpwLxPUUrtYcwy4Q4yMcjzUrrL+Stbq6u8UVVfKYh+6ZLz81Ij5L1ofhJJeeiM6Tn2dsIE66lIMhxBzFFB1k9HgXqtIxZjGvQZAXA9OxHgqtupspz+UzorBUe1a3uHgzK/iP5Np5jmWfE6NEhjFU/pY3dS2uFekez+vLqHe5DZ4njZcdUVOfi1UfiPYfocN2SBVffWAQL9jtdNa93qt1VSQU1L0SQ7UJYRRXw79tsMkYUxNPTPYDVtSTa17si/sscJJIDS0VNzoTdg2hhpT/s+VJQAi4LNMmT67A=
+  - secure: nBg9FEi+vBzIu6ryRBS4BDv+6UiRIhroxxCXiYoSETfHYhScEEFhx4rohi6f/d/yZxsOkZLF8sATV7jQvVIJ46+pviSvUXSjUQRUnkUdbGymwhU1Tx7ip0L4KyZm2VQMcPWphGDaI94tVifbso8hd6WnDC38dlfZMEE1+NiXkrPyMNxTlexaKLxAFjXam1+I/0Yh4mtsHdHA3UVAXljGlVY8HHMfpKCpbtYpQYk/i/gAdgl7Jo4uSjsd1EzxeFQCK2bSasHJrV9P9d12cfY1xdSeHiwYzGufCXxKvxFpHg0+s0YdE0tPfO8B7I4tiy0FIKBvmHiRTpJ7rcqkZnDyXYIxTnFpU88lP1X+jpScBgB/QUodzozlSJJTiAtaOYrVLTuEo5EQxw7VLQV2hX1FJaAJ5CYvVbjYfEsUnsFgIPKw3uTvGiOYc874qvFphZYcZiuifhiCicaHhAQJuQaJGWyGh1810YAWVM3RnBJbKGrsWTs8U/uaHQloD3POlpDZnJfuPXu22kEl5V/N8fl6pVe/AAi16BXVq1cYivBDK2AfItexYQ1seZDhlOtFri93O0X/cKFV/8CrB561QcAuLP1CCwkdSgU4D6qHB1d5X9+yfAmzerUp+U2vHNC18mS9BGFeEH7TZ50QSIE2PhOWGp0y7KKMylgTogeDKpnLo3Y=
+cache:
+  directories:
+  - node_modules
+before_script:
+- npm install -g snyk
+- snyk auth $SNYK_TOKEN
+before_deploy:
+- npm install github:requarks/core -f
+- npm install -g gulp
+- gulp deploy
+- snyk monitor
+deploy:
+  provider: releases
+  api_key:
+    secure: T/D4hdgOIPD0YUghUN0AYxluZGjY1LnM0LI6GsRGju1VY1pPI8N/VSnjxOPHPf3WXLRvmIB07ILltbQDFNYE9SW9IpIACWGVtD0l/0UlMhC15HlbWuLrYAYQyeLNzwLA1Q0OyKCEpynxV/5/wmI9rRXuRm5T7cVQ9CVOPPSZRJJfPljqCLmGPMcsAfV4VOVEm9KUkmwycVPZZ0Gi/MmsRiud4j0J4nFv+17BM+rwQe5VAJUkAVRgxfRDjIJN4/IIOLpgxbJAB2obYBQmuCDzaUyEFnKW9o0iAdbevfwxr3toMxqyuyW18bjuCUAWkKFyZuKejhODGY/dL+YICVMVeeHXxuQsj94p8bA/K0nCPiD7w2eKDIwyFg/1egc1yr0h6Ni+RlieEQYnU9u2QhHz41JL4mdAsVMJcVBEFofqWANeFUPqpRTBMlVerq9X6J5Vr/cOb9HAKZR2cLewJUNhM7Up/SCro4aDE7ujrxRipS117EvY3f1L0XzUFW9Oh27sbem5AA0992LflnxWVi4KyfFdZ6It8tflhWYriiDiNr5yt3APJELiqfx8HFWgi4oNGsdhphS41Att6YOzuPB7QkIlIW8LvBWzKljRK++s2TNy1hDixw8LWgpvXjElaRjvX4UIlllGyQ8HTAb2LOEgOXi/tK4nuwGhWrDGrnSxkhg=
+  file:
+  - dist/orchestrator.zip
+  - dist/orchestrator.tar.gz
+  skip_cleanup: true
+  overwrite: true
+  on:
+    branch: master
+    repo: Requarks/orchestrator
+    tags: true
+    node: '6'
