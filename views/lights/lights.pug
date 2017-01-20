@@ -30,6 +30,7 @@ block content
 									.device-title
 										= lt.device.name
 										span #{lt.device.brand} - #{lt.device.model}
-									.device-room= lt.device.room.name
+									if lt.device.room
+										.device-room= lt.device.room.name
 
 	include ../modals/bridges-discover.pug

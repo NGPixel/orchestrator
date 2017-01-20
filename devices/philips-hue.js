@@ -51,44 +51,41 @@ module.exports = {
   /**
    * Scans all registered lights in bridges
    *
-   * @param      {Array<Object>}  bridges  The bridges to scan
+   * @param      {Object}  br  The bridge to scan
    * @return     {Promise<Array<Object>, Error>}  List of lights
    */
-  scanLights (bridges) {
+  scanLights (br) {
     let self = this
 
-    return Promise.map(bridges, br => {
-      let client = new huejay.Client({
-        host: br.ipAddress,
-        username: br.auth
-      })
+    let client = new huejay.Client({
+      host: br.ipAddress,
+      username: br.auth
+    })
 
-      return client.bridge.ping().then(() => {
-        return client.bridge.isAuthenticated()
-      }).then(() => {
-        return client.lights.getAll().then(lights => {
-          return _.map(lights, lt => {
-            return {
-              state: lt.on,
-              colorMode: lt.colorMode,
-              brightness: lt.brightness,
-              hue: lt.hue,
-              sat: lt.saturation,
-              xy: lt.xy,
-              ct: lt.colorTemp,
-              alert: lt.alert,
-              effect: lt.effect,
-              uid: lt.id,
-              name: lt.name,
-              brand: self.brand,
-              model: lt.modelId,
-              meta: {
-                swversion: lt.softwareVersion,
-                type: lt.model.type,
-                uniqueid: lt.uniqueId
-              }
+    return client.bridge.ping().then(() => {
+      return client.bridge.isAuthenticated()
+    }).then(() => {
+      return client.lights.getAll().then(lights => {
+        return _.map(lights, lt => {
+          return {
+            state: 'pending',
+            colorMode: lt.colorMode,
+            brightness: lt.brightness,
+            hue: lt.hue,
+            sat: lt.saturation,
+            xy: lt.xy,
+            ct: lt.colorTemp,
+            alert: lt.alert,
+            effect: lt.effect,
+            uid: lt.id,
+            name: lt.name,
+            model: lt.modelId,
+            meta: {
+              swversion: lt.softwareVersion,
+              type: lt.model.type,
+              uniqueid: lt.uniqueId
             }
-          })
+          }
         })
       })
     })

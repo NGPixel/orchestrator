@@ -15,5 +15,8 @@ defaults:
     lang: en
     sessionSecret: 1234567890abcdefghijklmnopqrstuvxyz
     admin: admin@company.com
-    db: mongodb://localhost:27017/hue
+    db:
+      host: localhost
+      port: 28015
+      db: orchestrator
 # ---------------------------------

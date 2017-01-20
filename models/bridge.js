@@ -11,7 +11,7 @@ module.exports = (t) => {
     macAddress: t.type.string().optional(),
     auth: t.type.string().optional(),
     meta: t.type.object().optional().allowExtra(true),
-    isSetup: t.type.boolean().required(),
-    createdAt: t.type.date().default(t.r.now())
+    isSetup: t.type.boolean().required().default(false),
+    createdAt: t.type.date().required().default(t.r.now())
   })
 }

@@ -41,6 +41,10 @@ module.exports = {
 
     require(path.join(dbModelsPath, '_relations.js'))(self)
 
+    // Build indexes
+
+    require(path.join(dbModelsPath, '_indexes.js'))(self)
+
     return self
   }
 

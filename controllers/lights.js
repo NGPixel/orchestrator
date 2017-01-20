@@ -11,7 +11,7 @@ const router = express.Router()
  * Dashboard
  */
 router.get('/', (req, res, next) => {
-  db.Light.getJoin().run()
+  db.Light.getJoin().orderBy(db.r.row('device')('name')).run()
   .then(lights => {
     res.render('lights/lights', { lights })
   })

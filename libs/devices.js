@@ -10,7 +10,8 @@ const _ = require('lodash')
  */
 module.exports = {
 
-  moduleList: {},
+  moduleList: [],
+  deviceDefaults: {},
 
   /**
    * Initialize the Devices class
@@ -21,15 +22,21 @@ module.exports = {
     let self = this
     let devicesPath = path.resolve(ROOTPATH, 'devices')
 
+    // Load devices
+
     fs
     .readdirSync(devicesPath)
     .filter(file => {
-      return (file.indexOf('.') !== 0)
+      return (file.indexOf('.') !== 0 && _.startsWith(file, '_') === false)
     })
     .forEach(file => {
-      let modName = _.upperFirst(_.camelCase(_.split(file, '.')[0]))
-      self.moduleList[modName] = require(path.join(devicesPath, file))
+      // let modName = _.upperFirst(_.camelCase(_.split(file, '.')[0]))
+      self.moduleList.push(require(path.join(devicesPath, file)))
     })
+
+    // Load device defaults
+
+    self.deviceDefaults = require(path.join(devicesPath, '_defaults.js'))
 
     return self
   },
@@ -44,7 +51,7 @@ module.exports = {
 
     return Promise.map(self.moduleList, mod => {
       if (_.has(mod, 'scanBridges')) {
-        mod.scanBridges().then(brs => {
+        return mod.scanBridges().then(brs => {
           if (_.isArray(brs) && brs.length > 0) {
             return Promise.map(brs, br => {
               return db.Bridge.filter({ uid: br.uid, brand: br.brand }).count().run().then(c => {
@@ -52,12 +59,16 @@ module.exports = {
                   let newBr = new db.Bridge(br)
                   return newBr.save(br)
                 } else {
-                  return Promise.resolve(true)
+                  return Promise.resolve(true) // Bridge is already mapped
                 }
               })
             })
+          } else {
+            return Promise.resolve(true) // Module didn't find any bridge
           }
         })
+      } else {
+        return Promise.resolve(true) // Module doesn't support bridges
       }
     })
   },
@@ -74,27 +85,54 @@ module.exports = {
       if (_.has(mod, 'scanLights')) {
         return db.Bridge.filter({ brand: mod.brand }).run().then(bridges => {
           if (_.isArray(bridges) && bridges.length > 0) {
-            mod.scanLights(bridges).then(lights => {
-              if (_.isArray(lights) && lights.length > 0) {
-                return Promise.map(lights, lt => {
-                  return db.Device.filter({ uid: lt.uid, brand: lt.brand }).count().run().then(c => {
-                    if (c < 1) {
-                      // todo
-                      let newLt = new db.Light(lt)
-                      return newLt.save(lt)
-                    } else {
-                      return Promise.resolve(true)
-                    }
+            return Promise.map(bridges, br => {
+              return mod.scanLights(br).then(lights => {
+                if (_.isArray(lights) && lights.length > 0) {
+                  return Promise.map(lights, lt => {
+                    return db.Device.filter({ uid: lt.uid, brand: mod.brand }).count().execute().then(c => {
+                      if (c < 1) {
+                        //
+                        // Create device
+                        //
+                        let newDv = new db.Device(
+                          _.defaultsDeep(
+                            _.pick(lt, ['name', 'model', 'uid', 'meta']),
+                            {
+                              brand: mod.brand,
+                              type: 'light'
+                            }
+                          )
+                        )
+                        newDv.parent = br
+
+                        //
+                        // Create light
+                        //
+                        let newLt = new db.Light(
+                          _.defaultsDeep(
+                            _.pick(lt, ['state', 'colorMode', 'brightness', 'hue', 'saturation', 'xy', 'colorTemp', 'alert', 'effect']),
+                            self.deviceDefaults.light
+                          )
+                        )
+                        newLt.device = newDv
+
+                        return newLt.saveAll().return(true)
+                      } else {
+                        return Promise.resolve(true) // Light is already mapped
+                      }
+                    })
                   })
-                })
-              }
+                } else {
+                  return Promise.resolve(true) // No lights found by module
+                }
+              })
             })
           } else {
-            return Promise.resolve(true)
+            return Promise.resolve(true) // Module doesn't have a bridge setup
           }
         })
       } else {
-        return Promise.resolve(true)
+        return Promise.resolve(true) // Module doesn't support lights
       }
     })
   }
