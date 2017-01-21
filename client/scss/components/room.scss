@@ -1,0 +1,63 @@
+.rooms {
+
+}
+
+.room {
+  border: 2px dashed mc('green', '300');
+  background-color: lighten(mc('green', '50'), 5%);
+  border-radius: 7px;
+  padding: 2px;
+  cursor: pointer;
+  transition: background-color .6s ease;
+
+  &:hover {
+    background-color: lighten(mc('green', '50'), 2%);
+  }
+
+  .room-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    font-size: 32px;
+    color: mc('green', '800');
+  }
+
+  .room-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    font-size: 18px;
+    font-weight: 500;
+    color: mc('green', '800');
+    background-color: mc('green', '50');
+  }
+
+  .room-contents {
+    padding: 5px 0;
+
+    .column {
+      padding: 5px 10px;
+    }
+
+
+    strong {
+      display: block;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 600;
+      color: mc('grey', '600');
+    }
+
+    span {
+      display: block;
+      margin-top: 2px;
+      font-size: 12px;
+      font-weight: 700;
+      color: mc('blue-grey', '800');
+    }
+
+  }
+
+}

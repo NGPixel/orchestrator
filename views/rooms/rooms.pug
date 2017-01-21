@@ -22,15 +22,17 @@ block content
 						h1.title Rooms
 						h2.subtitle Manage your rooms
 					.content
-						.device-list
+						.rooms.columns.is-multiline
 							each rm in rooms
-								.device
-									.device-icon: img.is-small(src='/images/devices/')
-									.device-state.is-on
-									.device-title
-										= rm.name
-										//span #{lt.device.brand} - #{lt.device.model}
-									//if lt.device.room
-										.device-room= lt.device.room.name
-
-	include ../modals/bridges-discover.pug
+								.room.column.is-one-quarter-desktop.is-half-tablet
+									.room-icon: i.icon-expand
+									.room-title= rm.name
+									.room-contents.columns.is-mobile.is-multiline.is-gapless
+										.column.is-half
+											strong Lights
+											span 4
+										.column.is-half
+											strong Current Scene
+											span Relax
+											
+		include ../modals/rooms-create.pug
