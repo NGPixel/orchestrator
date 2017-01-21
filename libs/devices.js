@@ -96,7 +96,7 @@ module.exports = {
                         //
                         let newDv = new db.Device(
                           _.defaultsDeep(
-                            _.pick(lt, ['name', 'model', 'uid', 'meta']),
+                            _.pick(lt, ['name', 'model', 'uid', 'icon', 'meta']),
                             {
                               brand: mod.brand,
                               type: 'light'

@@ -7,6 +7,7 @@ module.exports = (t) => {
     model: t.type.string().optional(),
     type: t.type.string().required(),
     uid: t.type.string().required(),
+    icon: t.type.string().optional(),
     meta: t.type.object().optional().allowExtra(true),
     createdAt: t.type.date().default(t.r.now()),
     parentId: t.type.string(),

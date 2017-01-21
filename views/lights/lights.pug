@@ -25,7 +25,7 @@ block content
 						.device-list
 							each lt in lights
 								.device
-									.device-icon: img.is-small(src="/images/devices/philips/white_and_color_e27_b22.svg")
+									.device-icon: img.is-small(src='/images/devices/' + lt.device.icon)
 									.device-state.is-on
 									.device-title
 										= lt.device.name

@@ -4,8 +4,8 @@ block rootNavRight
 	i.nav-item#notifload
 	.nav-item
 			a.button.btn-create-prompt
-				i.icon-arrow-sync
-				span Discover
+				i.icon-plus
+				span Create
 
 block content
 	#page-type-view
@@ -19,16 +19,18 @@ block content
 				.column
 
 					.hero
-						h1.title Bridges
-						h2.subtitle Manage your bridges / hubs
+						h1.title Rooms
+						h2.subtitle Manage your rooms
 					.content
 						.device-list
-							each br in bridges
+							each rm in rooms
 								.device
-									.device-icon: img.is-small(src="/images/devices/" + br.icon)
+									.device-icon: img.is-small(src='/images/devices/')
 									.device-state.is-on
 									.device-title
-										= br.name
-										span #{br.brand} - #{br.model} - #{br.ipAddress}
+										= rm.name
+										//span #{lt.device.brand} - #{lt.device.model}
+									//if lt.device.room
+										.device-room= lt.device.room.name
 
 	include ../modals/bridges-discover.pug

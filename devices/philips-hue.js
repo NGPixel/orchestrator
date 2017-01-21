@@ -1,6 +1,5 @@
 'use strict'
 
-const Promise = require('bluebird')
 const huejay = require('huejay')
 const _ = require('lodash')
 
@@ -9,7 +8,56 @@ const _ = require('lodash')
  */
 module.exports = {
 
-  brand: 'Philips Hue', // REQUIRED
+  // Module info
+  brand: 'Philips Hue',
+
+  // List of models and their matching icons
+  _modelIcons: [
+    {
+      id: ['LCT001', 'LCT007', 'LCT010', 'LCT014'],
+      icon: 'philips-hue/white_e27_b22.svg'
+    },
+    {
+      id: ['LLM001', 'LWB004', 'LWB006', 'LWB007', 'LWB010', 'LWB014', 'LLM010', 'LLM011', 'LLM012', 'LTW001', 'LTW004'],
+      icon: 'philips-hue/white_and_color_e27_b22.svg'
+    },
+    {
+      id: ['LST001', 'LST002'],
+      icon: 'philips-hue/lightstrip.svg'
+    },
+    {
+      id: ['LCT003', 'LTW013', 'LTW014'],
+      icon: 'philips-hue/gu10.svg'
+    },
+    {
+      id: ['LCT002', 'LCT011'],
+      icon: 'philips-hue/br30.svg'
+    },
+    {
+      id: [], // todo: Find model ID for PAR16 lightbulb
+      icon: 'philips-hue/par16.svg'
+    },
+    {
+      id: ['LLC020'],
+      icon: 'philips-hue/go.svg'
+    },
+    {
+      id: ['LLC006', 'LLC010'],
+      icon: 'philips-hue/iris.svg'
+    },
+    {
+      id: ['LLC011', 'LLC012'],
+      icon: 'philips-hue/bloom.svg'
+    },
+    {
+      id: ['LLC007'],
+      icon: 'philips-hue/aura.svg'
+    },
+    {
+      id: ['LLC013'],
+      icon: 'philips-hue/storylight.svg'
+    }
+  ],
 
   /**
    * Scan for bridges on the network
@@ -56,7 +104,6 @@ module.exports = {
    */
   scanLights (br) {
     let self = this
-
     let client = new huejay.Client({
       host: br.ipAddress,
       username: br.auth
@@ -80,6 +127,7 @@ module.exports = {
             uid: lt.id,
             name: lt.name,
             model: lt.modelId,
+            icon: self._getModelIcon(lt.modelId),
             meta: {
               swversion: lt.softwareVersion,
               type: lt.model.type,
@@ -89,6 +137,22 @@ module.exports = {
         })
       })
     })
+  },
+
+  /**
+   * Gets the model icon path from the model ID.
+   *
+   * @param      {String}  md      Model ID
+   * @return     {String}   The model icon path.
+   */
+  _getModelIcon (md) {
+    let self = this
+
+    let matchedMI = _.find(self._modelIcons, mi => {
+      return _.includes(mi.id, md)
+    })
+
+    return (matchedMI) ? matchedMI.icon : ''
   }
 
 }

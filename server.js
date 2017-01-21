@@ -139,6 +139,7 @@ app.use('/', ctrl.auth)
 
 app.use('/', mw.auth, ctrl.dashboard)
 app.use('/lights', mw.auth, ctrl.lights)
+app.use('/rooms', mw.auth, ctrl.rooms)
 app.use('/bridges', mw.auth, ctrl.bridges)
 
 app.use('/api/bridges', mw.auth, ctrl.api.bridges)

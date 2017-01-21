@@ -4,8 +4,9 @@ module.exports = (t) => {
   return t.createModel('bridge', {
     uid: t.type.string().required(),
     name: t.type.string().required(),
-    brand: t.type.string().optional(),
+    brand: t.type.string().required(),
     model: t.type.string().optional(),
+    icon: t.type.string().optional(),
     state: t.type.string().required(),
     ipAddress: t.type.string().required(),
     macAddress: t.type.string().optional(),

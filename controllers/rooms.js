@@ -4,18 +4,16 @@ const express = require('express')
 const router = express.Router()
 
 // ==========================================
-// Dashboard
+// Rooms
 // ==========================================
 
 /**
- * Dashboard
+ * Rooms
  */
 router.get('/', (req, res, next) => {
-  // devices.scanLights()
-
-  db.Light.getJoin().orderBy(db.r.row('device')('name')).run()
-  .then(lights => {
-    res.render('lights/lights', { lights })
+  db.Room.orderBy('name').run()
+  .then(rooms => {
+    res.render('rooms/rooms', { rooms })
   })
   .catch(error => {
     console.log(`An error occurred: ${error.message}`)
