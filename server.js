@@ -28,7 +28,10 @@ let appconf = require(CORE_PATH + 'core-libs/config')()
 global.appconfig = appconf.config
 global.appdata = appconf.data
 global.db = require('./libs/rethinkdb').init()
-global.devices = require('./libs/devices').init()
+global.orch = {
+  devices: require('./libs/devices').init(),
+  rooms: require('./libs/rooms').init()
+}
 global.lang = require('i18next')
 
 // ----------------------------------------
@@ -143,6 +146,7 @@ app.use('/rooms', mw.auth, ctrl.rooms)
 app.use('/bridges', mw.auth, ctrl.bridges)
 
 app.use('/api/bridges', mw.auth, ctrl.api.bridges)
+app.use('/api/rooms', mw.auth, ctrl.api.rooms)
 
 // ----------------------------------------
 // Error handling

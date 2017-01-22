@@ -1,19 +1,18 @@
 
 #header-container
-	nav.nav.stickyscroll#header
-		.nav-left
-			block rootNavLeft
-				a.nav-item(href='/')
-					h1
-						i.icon-lightbulb
-						= appconfig.title
-		.nav-center
-			block rootNavCenter
-		span.nav-toggle
-			span
-			span
-			span
-		.nav-right
-			block rootNavRight
-				i.nav-item#notifload
-
+  nav#header.nav.stickyscroll
+    .nav-left
+      block rootNavLeft
+        a.nav-item(href='/')
+          h1
+            i.icon-lightbulb
+            = appconfig.title
+    .nav-center
+      block rootNavCenter
+    span.nav-toggle
+      span
+      span
+      span
+    .nav-right
+      block rootNavRight
+        i#notifload.nav-item

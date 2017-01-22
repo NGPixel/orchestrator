@@ -1,36 +1,36 @@
 extends ../layout.pug
 
 block rootNavRight
-	i.nav-item#notifload
-	.nav-item
-			a.button.btn-create-prompt
-				i.icon-arrow-sync
-				span Discover
+  i#notifload.nav-item
+  .nav-item
+    a.button.btn-create-prompt
+      i.icon-arrow-sync
+      span Discover
 
 block content
-	#page-type-view
-		.container.is-fluid
-			.columns.is-gapless
+  #page-type-view
+    .container.is-fluid
+      .columns.is-gapless
 
-				.column.is-narrow.is-hidden-touch.sidebar
+        .column.is-narrow.is-hidden-touch.sidebar
 
-					include ../common/sidebar.pug
+          include ../common/sidebar.pug
 
-				.column
+        .column
 
-					.hero
-						h1.title Lights
-						h2.subtitle Manage your lights
-					.content
-						.device-list
-							each lt in lights
-								.device
-									.device-icon: img.is-small(src='/images/devices/' + lt.device.icon)
-									.device-state.is-on
-									.device-title
-										= lt.device.name
-										span #{lt.device.brand} - #{lt.device.model}
-									if lt.device.room
-										.device-room= lt.device.room.name
+          .hero
+            h1.title Lights
+            h2.subtitle Manage your lights
+          .content
+            .device-list
+              each lt in lights
+                .device
+                  .device-icon: img.is-small(src='/images/devices/' + lt.device.icon)
+                  .device-state.is-on
+                  .device-title
+                    = lt.device.name
+                    span #{lt.device.brand} - #{lt.device.model}
+                  if lt.device.room
+                    .device-room= lt.device.room.name
 
-	include ../modals/bridges-discover.pug
+  include ../modals/bridges-discover.pug

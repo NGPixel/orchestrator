@@ -26,7 +26,7 @@
     "appconfig": true,
     "appdata": true,
     "db": true,
-    "devices": true,
+    "orch": true,
     "lang": true,
     "winston": true,
     "CORE_PATH": true,

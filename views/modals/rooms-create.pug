@@ -1,14 +1,18 @@
 
-.modal
-	.modal-background
-	.modal-container
-		.modal-content
-				header.is-green Create New Room
-				section
-					label.label Enter a name for this room:
-					p.control.is-fullwidth
-						input.input(type='text', placeholder='e.g. Living Room')
-						span.help.is-red.is-hidden This room name is invalid!
-				footer
-					a.button.is-grey.is-outlined Discard
-					a.button.is-green Create
+.modal(v-bind:class='{ "is-active": createModal.state }')
+  .modal-background
+  .modal-container
+    .modal-content
+      header.is-green Create New Room
+      section(v-if='!createModal.loading')
+        label.label Enter a name for this room:
+        p.control.is-fullwidth
+          input.input(type='text', placeholder='e.g. Living Room', v-model='createModal.name')
+          span.help.is-red(v-if='createModal.nameIsError') This room name is invalid!
+      section.modal-loading(v-if='createModal.loading')
+        i
+        span Creating new room...
+        em Please wait
+      footer(v-show='!createModal.loading')
+        a.button.is-grey.is-outlined(v-on:click='createRoomDiscard') Discard
+        a.button.is-green(v-on:click='createRoomCreate') Create

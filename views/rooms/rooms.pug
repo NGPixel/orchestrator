@@ -1,38 +1,42 @@
 extends ../layout.pug
 
+block head
+  script(type='text/javascript', src='/js/pages/rooms.min.js')
+
 block rootNavRight
-	i.nav-item#notifload
-	.nav-item
-			a.button.btn-create-prompt
-				i.icon-plus
-				span Create
+  i.nav-item#notifload
+  .nav-item#rooms-create-btn
+    a.button
+      i.icon-plus
+      span Create
 
 block content
-	#page-type-view
-		.container.is-fluid
-			.columns.is-gapless
+  #page-rooms
+    .container.is-fluid
+      .columns.is-gapless
 
-				.column.is-narrow.is-hidden-touch.sidebar
+        .column.is-narrow.is-hidden-touch.sidebar
 
-					include ../common/sidebar.pug
+          include ../common/sidebar.pug
 
-				.column
+        .column
 
-					.hero
-						h1.title Rooms
-						h2.subtitle Manage your rooms
-					.content
-						.rooms.columns.is-multiline
-							each rm in rooms
-								.room.column.is-one-quarter-desktop.is-half-tablet
-									.room-icon: i.icon-expand
-									.room-title= rm.name
-									.room-contents.columns.is-mobile.is-multiline.is-gapless
-										.column.is-half
-											strong Lights
-											span 4
-										.column.is-half
-											strong Current Scene
-											span Relax
-											
-		include ../modals/rooms-create.pug
+          .hero
+            h1.title Rooms
+            h2.subtitle Manage your rooms
+          .content
+            .rooms.columns.is-multiline
+              each rm in rooms
+                .column.is-one-quarter-desktop.is-half-tablet
+                  .room
+                    .room-icon: i.icon-expand
+                    .room-title= rm.name
+                    .room-contents.columns.is-mobile.is-multiline.is-gapless
+                      .column.is-half
+                        strong Lights
+                        span 4
+                      .column.is-half
+                        strong Current Scene
+                        span Relax
+                      
+    include ../modals/rooms-create.pug

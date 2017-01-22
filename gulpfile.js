@@ -12,6 +12,7 @@ var gzip = require('gulp-gzip')
 var sass = require('gulp-sass')
 var cleanCSS = require('gulp-clean-css')
 var include = require('gulp-include')
+var rename = require('gulp-rename')
 var run = require('run-sequence')
 
 /**
@@ -22,12 +23,14 @@ var run = require('run-sequence')
 var paths = {
   scripts: {
     combine: [
+      './node_modules/bluebird/js/browser/bluebird.min.js',
       './node_modules/jquery/dist/jquery.min.js',
+      './node_modules/axios/dist/axios.min.js',
       './node_modules/vue/dist/vue.min.js',
       './node_modules/lodash/lodash.min.js'
     ],
     compile: [
-      './client/js/*.js'
+      './client/js/**/*.js'
     ],
     watch: [
       './client/js/**/*.js'
@@ -59,7 +62,6 @@ var paths = {
     '!client/scss', '!client/scss/**',
     '!dist', '!dist/**',
     '!tests', '!tests/**',
-    '!.babelrc', '!.gitattributes', '!.gitignore', '!.snyk', '!.travis.yml',
     '!gulpfile.js', '!config.yml', '!orchestrator.sublime-project'
   ]
 }
@@ -100,7 +102,7 @@ gulp.task('scripts-app', function () {
   .pipe(include({ extensions: 'js' }))
   .pipe(babel())
   .pipe(uglify())
-  .pipe(concat('app.min.js'))
+  .pipe(rename({ suffix: '.min' }))
   .pipe(plumber.stop())
   .pipe(gulp.dest('./assets/js'))
 })
