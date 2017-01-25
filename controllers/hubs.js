@@ -4,16 +4,16 @@ const express = require('express')
 const router = express.Router()
 
 // ==========================================
-// Bridges
+// Hubs
 // ==========================================
 
 /**
  * Overview
  */
 router.get('/', (req, res, next) => {
-  db.Bridge.run()
-  .then(bridges => {
-    res.render('bridges/bridges', { bridges })
+  db.Hub.run()
+  .then(hubs => {
+    res.render('hubs/hubs', { hubs })
   })
   .catch(error => {
     console.log(`An error occurred: ${error.message}`)

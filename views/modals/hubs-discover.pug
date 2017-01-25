@@ -1,0 +1,45 @@
+
+.modal(v-bind:class='{ "is-active": discoverModal.state }')
+  .modal-background
+  .modal-container
+    .modal-content
+      template(v-if='discoverModal.step === "fetching"')
+        header.is-light-blue Discover new hub(s)
+        section.modal-loading
+          i
+          span Fetching hub definitions...
+          em Please wait
+      template(v-if='discoverModal.step === "select"')
+        header.is-light-blue Discover new hub(s)
+        section
+          label.label What type of hub(s) are you looking for?
+          ul.bubble-select
+            template(v-for='mod in discoverModal.modules')
+              li(v-on:click='discoverHubsSelect(mod.key)', :key='mod.key', v-bind:class='{ "is-active": discoverModal.module === mod.key }')
+                img(v-bind:src='"/images/hubs/" + mod.icon', v-bind:alt='mod.name')
+        footer
+          a.button.is-grey.is-outlined(v-on:click='discoverHubsDiscard') Discard
+          a.button(v-on:click='discoverHubsScan', v-bind:class='{ "is-light-blue": discoverModal.module !== false, "is-disabled": discoverModal.module === false}') Scan Network
+      template(v-if='discoverModal.step === "scanning"')
+        header.is-light-blue Discovering new {{ discoverModal.moduleName }} hubs
+        section.modal-loading
+          i
+          span Scanning network...
+          em Please wait
+      template(v-if='discoverModal.step === "notfound"')
+        header.is-orange Discovery Error
+        section.modal-loading
+          span No {{ discoverModal.moduleName }} hubs were found on the network. 
+        footer
+          a.button.is-grey.is-outlined(v-on:click='discoverHubsDiscard') Abort
+          a.button.is-light-blue(v-on:click='discoverModal.step = "select"') Try Again
+      template(v-if='discoverModal.step === "found"')
+        header.is-green New hubs found!
+        section
+          label.label The following {{ discoverModal.moduleName }} hubs were found on the network and have been saved successfully:
+          ul.bullets
+            li(v-for='hb in discoverModal.hubs') {{ hb.name }} ({{ hb.ipAddress }})
+          span.note Some hubs may require further setup. Look for the #[strong Set Up] button next to them.
+        footer
+          a.button.is-grey.is-outlined(v-on:click='discoverHubsFinish') Finish
+          a.button.is-light-blue.is-outlined(v-on:click='discoverModal.step = "select"') Start Again

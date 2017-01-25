@@ -30,7 +30,6 @@ module.exports = {
       return (file.indexOf('.') !== 0 && _.startsWith(file, '_') === false)
     })
     .forEach(file => {
-      // let modName = _.upperFirst(_.camelCase(_.split(file, '.')[0]))
       self.moduleList.push(require(path.join(devicesPath, file)))
     })
 
@@ -42,39 +41,60 @@ module.exports = {
   },
 
   /**
-   * Scans bridges across all modules
-   *
-   * @return {Promise<Boolean, Error>} Promise of the operation
+   * Get all supported hub definitions
+   * @return {Array<Object>} List of hub definitions
    */
-  scanBridges () {
+  getHubDefinitions () {
     let self = this
-
-    return Promise.map(self.moduleList, mod => {
-      if (_.has(mod, 'scanBridges')) {
-        return mod.scanBridges().then(brs => {
-          if (_.isArray(brs) && brs.length > 0) {
-            return Promise.map(brs, br => {
-              return db.Bridge.filter({ uid: br.uid, brand: br.brand }).count().run().then(c => {
-                if (c < 1) {
-                  let newBr = new db.Bridge(br)
-                  return newBr.save(br)
-                } else {
-                  return Promise.resolve(true) // Bridge is already mapped
-                }
-              })
-            })
-          } else {
-            return Promise.resolve(true) // Module didn't find any bridge
-          }
-        })
-      } else {
-        return Promise.resolve(true) // Module doesn't support bridges
+    return _.map(_.filter(self.moduleList, m => {
+      return _.has(m, 'hub')
+    }), m => {
+      return {
+        key: m.key,
+        name: m.hub.name,
+        icon: m.hub.icon
       }
     })
   },
 
   /**
-   * Refresh light devices from all bridges
+   * Scans hubs across all modules
+   *
+   * @param {String} modKey Key of the module to scan from
+   * @return {Promise<Boolean, Error>} Promise of the operation
+   */
+  scanHubs (modKey) {
+    let self = this
+
+    let mod = _.find(self.moduleList, { key: modKey })
+    if (_.has(mod, 'scanHubs')) {
+      return mod.scanHubs().then(hubs => {
+        if (_.isArray(hubs) && hubs.length > 0) {
+          return Promise.map(hubs, hb => {
+            return db.Hub.filter({ uid: hb.uid, brand: hb.brand }).count().execute().then(c => {
+              if (c < 1) {
+                let newHub = new db.Hub(hb)
+                return newHub.save().return(_.pick(hb, ['uid', 'name', 'ipAddress']))
+              } else {
+                return Promise.resolve(true) // Bridge is already mapped
+              }
+            })
+          })
+        } else {
+          return Promise.resolve(true) // Module didn't find any bridge
+        }
+      }).then((results) => {
+        return _.filter(results, (r) => {
+          return _.isPlainObject(r) && _.has(r, 'uid')
+        })
+      })
+    } else {
+      return Promise.resolve(true) // Module doesn't support hubs
+    }
+  },
+
+  /**
+   * Refresh light devices from all hubs
    *
    * @return     {Promise<Boolean, Error>}  Promise of the operation
    */
@@ -83,10 +103,10 @@ module.exports = {
 
     return Promise.map(self.moduleList, mod => {
       if (_.has(mod, 'scanLights')) {
-        return db.Bridge.filter({ brand: mod.brand }).run().then(bridges => {
-          if (_.isArray(bridges) && bridges.length > 0) {
-            return Promise.map(bridges, br => {
-              return mod.scanLights(br).then(lights => {
+        return db.Hub.filter({ brand: mod.brand }).run().then(hubs => {
+          if (_.isArray(hubs) && hubs.length > 0) {
+            return Promise.map(hubs, hb => {
+              return mod.scanLights(hb).then(lights => {
                 if (_.isArray(lights) && lights.length > 0) {
                   return Promise.map(lights, lt => {
                     return db.Device.filter({ uid: lt.uid, brand: mod.brand }).count().execute().then(c => {
@@ -103,7 +123,7 @@ module.exports = {
                             }
                           )
                         )
-                        newDv.parent = br
+                        newDv.parent = hb
 
                         //
                         // Create light
@@ -128,7 +148,7 @@ module.exports = {
               })
             })
           } else {
-            return Promise.resolve(true) // Module doesn't have a bridge setup
+            return Promise.resolve(true) // Module doesn't have a hub setup
           }
         })
       } else {

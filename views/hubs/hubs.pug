@@ -1,0 +1,47 @@
+extends ../layout.pug
+
+block head
+  script(type='text/javascript', src='/js/pages/hubs.min.js')
+
+block rootNavRight
+  i#notifload.nav-item
+  .nav-item
+    a.button#hubs-discovery-btn
+      i.icon-arrow-sync
+      span Discover
+
+block content
+  #page-hubs
+    .container.is-fluid
+      .columns.is-gapless
+
+        .column.is-narrow.is-hidden-touch.sidebar
+
+          include ../common/sidebar.pug
+
+        .column
+
+          .hero
+            h1.title Hubs
+            h2.subtitle Manage your hubs / bridges to other devices
+          .content
+            if hubs.length > 0
+              .device-list
+                each hb in hubs
+                  .device
+                    .device-icon: img.is-small(src="/images/devices/" + hb.icon)
+                    .device-state.is-on
+                    .device-title
+                      = hb.name
+                      span #{hb.brand} - #{hb.model} - #{hb.ipAddress}
+                    .device-actions
+                      button.button.is-light-blue(v-on:click='setupHub("' + hb.id + '")') Set Up
+                      a.button.is-grey.is-icon-only: i.icon-cog
+            else
+              .device-list-empty
+                | You don't have any hub registered yet.
+                br
+                | Click the #[strong Discover] button above to scan your network for new hubs.
+
+    include ../modals/hubs-discover.pug
+    include ../modals/hubs-setup.pug

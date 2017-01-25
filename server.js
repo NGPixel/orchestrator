@@ -143,9 +143,10 @@ app.use('/', ctrl.auth)
 app.use('/', mw.auth, ctrl.dashboard)
 app.use('/lights', mw.auth, ctrl.lights)
 app.use('/rooms', mw.auth, ctrl.rooms)
-app.use('/bridges', mw.auth, ctrl.bridges)
+app.use('/hubs', mw.auth, ctrl.hubs)
 
-app.use('/api/bridges', mw.auth, ctrl.api.bridges)
+app.use('/api/hubs', mw.auth, ctrl.api.hubs)
+app.use('/api/devices', mw.auth, ctrl.api.devices)
 app.use('/api/rooms', mw.auth, ctrl.api.rooms)
 
 // ----------------------------------------

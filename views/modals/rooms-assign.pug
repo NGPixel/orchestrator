@@ -1,0 +1,20 @@
+
+.modal(v-bind:class='{ "is-active": assignModal.state }')
+  .modal-background
+  .modal-container
+    .modal-content
+      header.is-green Assign Device to {{ assignModal.roomName }}
+      section(v-if='!assignModal.loading')
+        label.label Select a device to assign to this room:
+        p.control.is-fullwidth
+          select(v-model='assignModal.device')
+            option(v-for='dv in assignModal.devices', v-bind:value='dv.id') {{ dv.name }}
+          span.help.is-red(v-if='assignModal.deviceIsError') You must select a valid device.
+      section.modal-loading(v-if='assignModal.loading')
+        i
+        span(v-if='assignModal.loadingMsg === "fetching"') Fetching available devices...
+        span(v-if='assignModal.loadingMsg === "assigning"') Assigning device...
+        em Please wait
+      footer(v-show='!assignModal.loading')
+        a.button.is-grey.is-outlined(v-on:click='assignRoomDiscard') Discard
+        a.button.is-green(v-on:click='assignRoomAssign') Assign

@@ -30,7 +30,8 @@ var paths = {
       './node_modules/lodash/lodash.min.js'
     ],
     compile: [
-      './client/js/**/*.js'
+      './client/js/**/*.js',
+      '!client/js/components/**/*'
     ],
     watch: [
       './client/js/**/*.js'

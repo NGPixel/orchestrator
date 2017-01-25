@@ -35,6 +35,11 @@
 
 }
 
+.device-list-empty {
+  color: mc('blue-grey', '600');
+  font-size: 14px;
+}
+
 .device-icon {
 	padding: 8px 10px;
 	background-color: mc('blue-grey', '800');
@@ -96,4 +101,17 @@
 	font-size: 12px;
 	flex: 0 0 auto;
 	margin: 0 15px;
+}
+
+.device-actions {
+	padding: 0 10px;
+	display: flex;
+	align-items: center;
+	flex: 0 0 auto;
+	margin: 0 15px;
+
+  .button + .button {
+    margin-left: 5px;
+  }
+
 }

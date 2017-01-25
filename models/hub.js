@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = (t) => {
-  return t.createModel('bridge', {
+  return t.createModel('hub', {
     uid: t.type.string().required(),
     name: t.type.string().required(),
     brand: t.type.string().required(),

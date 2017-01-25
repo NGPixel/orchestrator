@@ -33,10 +33,21 @@ block content
                     .room-title= rm.name
                     .room-contents.columns.is-mobile.is-multiline.is-gapless
                       .column.is-half
-                        strong Lights
-                        span 4
+                        strong Devices
+                        span= rm.devices
                       .column.is-half
                         strong Current Scene
-                        span Relax
-                      
+                        span None
+                    .room-actions
+                      a.button.is-green.is-outlined(href='/rooms/' + rm.id)
+                        i.icon-cog
+                        span Manage
+                      button.button.is-green.is-outlined(v-on:click='assignRoom("' + rm.id + '", "' + rm.name + '")')
+                        i.icon-link2
+                        span Assign
+                      button.button.is-green.is-outlined
+                        i.icon-sun
+                        span Scene
+
     include ../modals/rooms-create.pug
+    include ../modals/rooms-assign.pug

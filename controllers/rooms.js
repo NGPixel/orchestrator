@@ -11,7 +11,12 @@ const router = express.Router()
  * Rooms
  */
 router.get('/', (req, res, next) => {
-  orch.rooms.getAll().then(rooms => {
+  db.Room.getJoin({
+    devices: {
+      _apply: seq => { return seq.count() },
+      _array: false
+    }
+  }).orderBy('name').run().then(rooms => {
     res.render('rooms/rooms', { rooms })
   })
   .catch(error => {

@@ -2,7 +2,6 @@
 $primary: 'green';
 
 @import 'core-client/scss/core';
-@import 'core-client/scss/components/alert';
 @import 'core-client/scss/components/button';
 @import 'core-client/scss/components/footer';
 @import 'core-client/scss/components/form';
@@ -16,6 +15,8 @@ $primary: 'green';
 @import 'core-client/scss/components/table';
 @import 'core-client/scss/components/typography';
 
+@import './components/alert';
+@import './components/bubble-select';
 @import './components/device';
 @import './components/room';
 

@@ -1,0 +1,39 @@
+.bubble-select {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+
+  li {
+    border: 1px solid mc('grey', '500');
+    border-radius: 2px;
+    flex: 1 0 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 84px;
+    margin: 5px;
+    cursor: pointer;
+    transition: border-color .4s ease;
+
+    &:hover {
+      border-color: mc('light-blue', '500');
+    }
+
+    &.is-active {
+      border-width: 4px;
+      @include prefix(animation, bubbleSelectBorderBlink 1s ease-out infinite);
+    }
+
+  }
+
+}
+
+@include keyframes(bubbleSelectBorderBlink) {
+  from, to {
+    border-color: mc('light-blue', '500');
+  }
+  50% {
+    border-color: mc('light-blue', '200');
+  }
+}

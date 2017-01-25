@@ -39,6 +39,7 @@
 
     .column {
       padding: 5px 10px;
+      text-align: center;
     }
 
 
@@ -56,6 +57,18 @@
       font-size: 12px;
       font-weight: 700;
       color: mc('blue-grey', '800');
+    }
+
+  }
+
+  .room-actions {
+    padding: 0 10px 5px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .button {
+      margin: 0 5px 5px 5px;
     }
 
   }

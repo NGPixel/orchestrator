@@ -1,0 +1,17 @@
+
+.modal(v-bind:class='{ "is-active": setupModal.state }')
+  .modal-background
+  .modal-container
+    .modal-content
+      template(v-if='setupModal.step === "fetching"')
+        header.is-light-blue Preparing for hub setup
+        section.modal-loading
+          i
+          span Fetching hub information...
+          em Please wait
+      template(v-if='setupModal.step === "setup"')
+        header.is-light-blue Authorization required
+        section.modal-instructions
+          img(src='/images/devices/philips-hue/pushlink_bridgev2.svg')
+          span #[strong Push the button] on your Philips Hue bridge to allow access
+          em Waiting for confirmation...

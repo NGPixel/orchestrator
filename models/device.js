@@ -10,7 +10,7 @@ module.exports = (t) => {
     icon: t.type.string().optional(),
     meta: t.type.object().optional().allowExtra(true),
     createdAt: t.type.date().default(t.r.now()),
-    parentId: t.type.string(),
+    hubId: t.type.string(),
     roomId: t.type.string()
   })
 }

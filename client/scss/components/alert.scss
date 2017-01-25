@@ -1,0 +1,89 @@
+#alerts {
+	position: fixed;
+	top: 55px;
+	right: 10px;
+	width: 350px;
+	z-index: 20;
+
+	> ul {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+
+		> li {
+			background-color: mc('blue-grey', '800');
+			box-shadow: 5px 5px 0 transparentize(mc('blue-grey', '900'), 0.7);
+			border: 1px solid mc('blue-grey', '500');
+			border-left-width: 5px;
+			margin-top: 5px;
+			padding: 8px 12px;
+			animation-name: slideFromRight;
+			animation-duration: 1s;
+			cursor: pointer;
+      position: relative;
+
+			&:hover {
+				background-color: mc('blue-grey', '900');
+			}
+
+			&.exit {
+				animation-name: zoomOut;
+				animation-duration: 1s;
+				transform-origin: top center;
+			}
+
+      > button {
+        background-color: transparent;
+        border: none;
+        color: #FFF;
+        width: 15px;
+        height: 15px;
+        padding: 0;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+
+        &:before {
+          content: 'X';
+        }
+
+      }
+
+			> strong {
+				display: block;
+				font-size: 13px;
+				font-weight: 500;
+				color: #FFF;
+
+				> i {
+					margin-right: 5px;
+				}
+
+			}
+
+			> span {
+				font-size: 12px;
+				font-weight: 500;
+				color: mc('blue-grey', '100');
+			}
+
+			&.error {
+				border-color: mc('red', '400');
+				background-color: mc('red', '600');
+				> span {
+					color: mc('red', '50');
+				}
+			}
+			&.success {
+				border-color: mc('green', '400');
+				background-color: mc('green', '700');
+				> span {
+					color: mc('green', '50');
+				}
+			}
+
+		}
+
+	}
+
+}

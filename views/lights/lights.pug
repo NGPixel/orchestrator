@@ -4,8 +4,8 @@ block rootNavRight
   i#notifload.nav-item
   .nav-item
     a.button.btn-create-prompt
-      i.icon-arrow-sync
-      span Discover
+      i.icon-plus
+      span Add
 
 block content
   #page-type-view
@@ -22,15 +22,19 @@ block content
             h1.title Lights
             h2.subtitle Manage your lights
           .content
-            .device-list
-              each lt in lights
-                .device
-                  .device-icon: img.is-small(src='/images/devices/' + lt.device.icon)
-                  .device-state.is-on
-                  .device-title
-                    = lt.device.name
-                    span #{lt.device.brand} - #{lt.device.model}
-                  if lt.device.room
-                    .device-room= lt.device.room.name
-
-  include ../modals/bridges-discover.pug
+            if lights.length > 0
+              .device-list
+                each lt in lights
+                  .device
+                    .device-icon: img.is-small(src='/images/devices/' + lt.device.icon)
+                    .device-state.is-on
+                    .device-title
+                      = lt.device.name
+                      span #{lt.device.brand} - #{lt.device.model}
+                    if lt.device.room
+                      .device-room= lt.device.room.name
+            else
+              .device-list-empty
+                | You don't have any light registered yet.
+                br
+                | Click the #[strong Add] button above to add a standalone light (e.g. LIFX) or register a new hub to scan for lights (e.g. Philips Hue) from the #[a(href='/hubs') Hubs] page.

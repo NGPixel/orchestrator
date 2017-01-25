@@ -9,7 +9,12 @@ const _ = require('lodash')
 module.exports = {
 
   // Module info
+  key: 'philips-hue',
   brand: 'Philips Hue',
+  hub: {
+    name: 'Philips Hue',
+    icon: 'philips-hue.png'
+  },
 
   // List of models and their matching icons
   _modelIcons: [
@@ -64,19 +69,20 @@ module.exports = {
    *
    * @return     {Promise<Object[], Error>}  List of found bridges
    */
-  scanBridges () {
+  scanHubs () {
     let self = this
 
     return huejay.discover()
     .then(bridges => {
       return _.map(bridges, b => {
         return {
-          ui: b.id,
+          uid: b.id,
           name: 'New Bridge (' + b.id + ')',
           brand: self.brand,
           model: 'Unknown',
           state: 'pending',
-          ipAddress: b.ipAddress,
+          icon: 'unknown.svg',
+          ipAddress: b.ip,
           macAddress: '',
           auth: '',
           meta: {},
@@ -92,7 +98,7 @@ module.exports = {
    * @param      {Object}  bridge  The new bridge to setup
    * @return {Promise<Object>} The configured bridge
    */
-  setupBridge (bridge) {
+  setupHub (bridge) {
     // todo
   },
 
