@@ -3,6 +3,7 @@
 module.exports = (t) => {
   return t.createModel('device', {
     name: t.type.string().required(),
+    moduleKey: t.type.string().required(),
     brand: t.type.string().optional(),
     model: t.type.string().optional(),
     type: t.type.string().required(),

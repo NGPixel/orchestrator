@@ -77,6 +77,7 @@ module.exports = {
       return _.map(bridges, b => {
         return {
           uid: b.id,
+          moduleKey: self.key,
           name: 'New Bridge (' + b.id + ')',
           brand: self.brand,
           model: 'Unknown',
@@ -99,7 +100,52 @@ module.exports = {
    * @return {Promise<Object>} The configured bridge
    */
   setupHub (bridge) {
-    // todo
+    let client = new huejay.Client({
+      host: bridge.ipAddress
+    })
+    let clientUser = new client.users.User()
+    clientUser.deviceType = 'orchestrator#app'
+
+    return new Promise((resolve, reject) => {
+      let setupCheckIdx = 0
+      let setupCheckIsPending = false
+      let setupCheck = setInterval(() => {
+        setupCheckIdx++
+        if (!setupCheckIsPending) {
+          setupCheckIsPending = true
+          client.users.create(clientUser).then(usr => {
+            clearInterval(setupCheck)
+            bridge.auth = usr.username
+            return client.bridge.get().then(br => {
+              bridge.name = br.name
+              bridge.model = br.modelId
+              bridge.state = 'online'
+              bridge.macAddress = br.macAddress
+              bridge.isSetup = true
+              bridge.icon = (br.modelId === 'BSB001') ? 'philips-hue/bridge_v1.svg' : 'philips-hue/bridge_v2.svg'
+              bridge.meta = _.pick(br, ['softwareVersion', 'apiVersion', 'zigbeeChannel', 'timeZone', 'id'])
+              bridge.save().then(() => {
+                return resolve(br)
+              })
+            }).catch((err) => {
+              reject(err)
+            })
+          }).catch(error => {
+            if (error instanceof huejay.Error && error.type === 101) {
+              setupCheckIsPending = false
+              return true // Button not pressed yet.
+            } else {
+              clearInterval(setupCheck)
+              reject(new Error(error.message))
+            }
+          })
+        }
+        if (setupCheckIdx > 30) {
+          clearInterval(setupCheck)
+          reject(new Error('Button was not pressed within time limit.'))
+        }
+      }, 1000)
+    })
   },
 
   /**

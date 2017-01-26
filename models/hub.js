@@ -3,6 +3,7 @@
 module.exports = (t) => {
   return t.createModel('hub', {
     uid: t.type.string().required(),
+    moduleKey: t.type.string().required(),
     name: t.type.string().required(),
     brand: t.type.string().required(),
     model: t.type.string().optional(),

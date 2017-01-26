@@ -94,6 +94,27 @@ module.exports = {
   },
 
   /**
+   * Setup an unconfigured hub
+   * @param {String} hubId Hub Id
+   * @return {Promise<Object>} Promise of the configured hub
+   */
+  setupHub (hubId) {
+    let self = this
+    return db.Hub.get(hubId).run().then(hb => {
+      if (hb) {
+        let mod = _.find(self.moduleList, { key: hb.moduleKey })
+        if (_.has(mod, 'setupHub')) {
+          return mod.setupHub(hb)
+        } else {
+          return Promise.reject(new Error('Hub does not support setup operation'))
+        }
+      } else {
+        return Promise.reject(new Error('Invalid Hub ID'))
+      }
+    })
+  },
+
+  /**
    * Refresh light devices from all hubs
    *
    * @return     {Promise<Boolean, Error>}  Promise of the operation

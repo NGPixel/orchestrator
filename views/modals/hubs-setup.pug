@@ -13,5 +13,12 @@
         header.is-light-blue Authorization required
         section.modal-instructions
           img(src='/images/devices/philips-hue/pushlink_bridgev2.svg')
-          span #[strong Push the button] on your Philips Hue bridge to allow access
-          em Waiting for confirmation...
+          span #[strong Push the button] on your Philips Hue bridge within 30 seconds
+          em Waiting for authorization...
+      template(v-if='setupModal.step === "success"')
+        header.is-green Hub setup completed
+        section.modal-instructions
+          i.icon-circle-check.is-huge.is-green
+          span Congratulations! Your hub is now ready for use and synced.
+        footer
+          a.button.is-green(v-on:click='setupHubFinish') Finish

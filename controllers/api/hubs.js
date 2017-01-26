@@ -34,4 +34,17 @@ router.post('/discover', (req, res, next) => {
   })
 })
 
+/**
+ * Setup Hub
+ */
+router.post('/setup', (req, res, next) => {
+  let hubId = req.body.hubId
+
+  orch.devices.setupHub(hubId).then((ok) => {
+    res.json({ ok })
+  }).catch((err) => {
+    res.status(500).json({ msg: err.message })
+  })
+})
+
 module.exports = router

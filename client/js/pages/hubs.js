@@ -120,19 +120,29 @@ jQuery(document).ready(function ($) {
 
         _.delay(function () {
           self.setupModal.step = 'setup'
-        }, 1000)
+          self.$http.post('/api/hubs/setup', {
+            hubId
+          }).then((resp) => {
+            self.setupModal.step = 'success'
+          }).catch((err) => {
+            if (err.response.data.msg) {
+              Alerts.pushError('Error', err.response.data.msg)
+            } else {
+              Alerts.pushError('Error', err.message)
+            }
+            self.setupModal.state = false
+          })
+        }, 500)
+      },
 
-        /* self.$http.get('/api/hubs/get-supported').then((resp) => {
-          self.discoverModal.modules = resp.data.modules
-          self.discoverModal.step = 'select'
-        }).catch((err) => {
-          if (err.response.data.msg) {
-            Alerts.pushError('Error', err.response.data.msg)
-          } else {
-            Alerts.pushError('Error', err.message)
-          }
-          self.discoverModal.state = false
-        }) */
+      /**
+       * Setup Hub - Reload Page
+       */
+      setupHubFinish: function (ev) {
+        let self = this
+
+        self.setupModal.step = 'redirect'
+        window.location.reload(true)
       }
     }
   })

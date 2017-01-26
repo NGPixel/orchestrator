@@ -30,13 +30,14 @@ block content
                 each hb in hubs
                   .device
                     .device-icon: img.is-small(src="/images/devices/" + hb.icon)
-                    .device-state.is-on
+                    .device-state(class={ 'is-on': hb.state === 'online', 'is-off': hb.state !== 'online'})
                     .device-title
                       = hb.name
                       span #{hb.brand} - #{hb.model} - #{hb.ipAddress}
                     .device-actions
-                      button.button.is-light-blue(v-on:click='setupHub("' + hb.id + '")') Set Up
-                      a.button.is-grey.is-icon-only: i.icon-cog
+                      if !hb.isSetup
+                        button.button.is-light-blue(v-on:click='setupHub("' + hb.id + '")') Set Up
+                      a.button.is-grey.is-icon-only(href='/hubs/' + hb.id): i.icon-cog
             else
               .device-list-empty
                 | You don't have any hub registered yet.
