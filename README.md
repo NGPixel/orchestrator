@@ -9,4 +9,4 @@
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 ##### Control your home automation with advanced routines and triggers (e.g Philips Hue lights)
-*Under active development*
+*Not Currently Maintened*
